@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f2ede6;
+    --acid: #c8f135;
+    --rust: #e84c1e;
+    --slate: #1a1a1a;
+    --muted: #3a3a3a;
+    --dim: #8a8a8a;
+    --radius: 4px;
+  }
+
+  * {
+    cursor: none !important;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--ink);
+    color: var(--paper);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--acid);
+    color: var(--ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--ink);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--acid);
+  }
+}
+
+/* ── NOISE GRAIN OVERLAY ─────────────────────────────── */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+}
+
+/* ── CUSTOM CURSOR ───────────────────────────────────── */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--acid);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s, height 0.15s, background 0.15s;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(200, 241, 53, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.2s ease;
+}
+
+.cursor-dot.hovered {
+  width: 12px;
+  height: 12px;
+  background: var(--rust);
+}
+
+.cursor-ring.hovered {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(232, 76, 30, 0.6);
+}
+
+/* ── SCROLLING BG TEXT ───────────────────────────────── */
+.bg-marquee-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(80px, 14vw, 200px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 237, 230, 0.06);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.03em;
+}
+
+/* ── GLASS CARD ──────────────────────────────────────── */
+.glass {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(242, 237, 230, 0.07);
+}
+
+/* ── SECTION LABEL ───────────────────────────────────── */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--acid);
+}
+
+/* ── GRADIENT TEXT ───────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--paper) 0%, var(--dim) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-acid {
+  background: linear-gradient(135deg, var(--acid) 0%, #8fd622 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── LINK UNDERLINE EFFECT ───────────────────────────── */
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: var(--acid);
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* ── BENTO GRID ──────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+/* ── TAG ─────────────────────────────────────────────── */
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border: 1px solid rgba(242, 237, 230, 0.15);
+  border-radius: 2px;
+  color: var(--dim);
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tag:hover {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 237, 230, 0.1), transparent);
+}
+
+/* ── PHOSPHOR GLOW ───────────────────────────────────── */
+.glow-acid {
+  box-shadow: 0 0 30px rgba(200, 241, 53, 0.12), 0 0 60px rgba(200, 241, 53, 0.04);
+}
+
+.glow-rust {
+  box-shadow: 0 0 30px rgba(232, 76, 30, 0.15), 0 0 60px rgba(232, 76, 30, 0.05);
+}
