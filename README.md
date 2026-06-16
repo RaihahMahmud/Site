@@ -98,37 +98,9 @@ vercel --prod
 ```
 Done. Vercel auto-detects Vite. Your site will be live at `yourname.vercel.app`.
 
-### Option B — GitHub + Vercel Dashboard
-1. Push your code to a GitHub repo
-2. Go to [vercel.com](https://vercel.com) → **New Project**
-3. Import your GitHub repo
-4. Framework preset: **Vite** (auto-detected)
-5. Click **Deploy**
 
-Every `git push` to `main` auto-deploys.
 
-### Option C — Netlify
-```bash
-npm run build
-# Drag the `dist/` folder to netlify.com/drop
-```
 
----
-
-## 🛠 VS Code Setup
-
-### Recommended extensions
-Install these from the Extensions panel (`Ctrl+Shift+X`):
-
-| Extension | ID |
-|-----------|-----|
-| ES7+ React Snippets | `dsznajder.es7-react-js-snippets` |
-| Tailwind CSS IntelliSense | `bradlc.vscode-tailwindcss` |
-| Prettier | `esbenp.prettier-vscode` |
-| Auto Rename Tag | `formulahendry.auto-rename-tag` |
-
-### Settings (`.vscode/settings.json`)
-```json
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
