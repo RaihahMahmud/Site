@@ -6,7 +6,7 @@ export default function Footer() {
 
     <footer className="border-t border-paper/5 py-8">
 
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row flex-wrap items-center justify-between gap-4">
 
         <p className="font-mono text-[11px] text-dim">
 
@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="flex items-center gap-2">
 
           <span
-            className="w-1.5 h-1.5 rounded-full bg-acid animate-pulse"
+            className="w-1.5 h-1.5 rounded-full bg-acid"
             aria-hidden="true"
           />
 
