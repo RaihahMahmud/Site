@@ -9,7 +9,7 @@ export default function Cursor() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
     const sync = () => setEnabled(mq.matches);
     sync();
     mq.addEventListener('change', sync);
@@ -23,6 +23,7 @@ export default function Cursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    document.documentElement.classList.add("custom-cursor");
     const bound = [];
 
     const onMouseMove = (e) => {
@@ -59,7 +60,7 @@ export default function Cursor() {
     };
 
     const addLinkListeners = () => {
-      document.querySelectorAll('a, button, [data-hover]').forEach(bindEl);
+      document.querySelectorAll('a, button, summary, [data-hover]').forEach(bindEl);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -70,6 +71,7 @@ export default function Cursor() {
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor');
       document.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(rafRef.current);
       observer.disconnect();

@@ -1,76 +1,64 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 
 const bentoItems = [
   {
     id: 'frontend',
     col: 'col-span-12 md:col-span-5',
-    accent: 'acid',
     label: 'Frontend',
-    title: 'Interfaces that feel alive',
+    title: 'Interfaces & interaction',
     tags: ['React', 'Next.js', 'Framer Motion', 'Tailwind CSS', 'TypeScript'],
-    icon: '⬡',
+    project: { label: 'TalentFlow / application interface', href: 'https://github.com/RaihahMahmud/TalentFlow_synapse_AI_B2B' },
     desc: 'From component architecture to scroll-linked animations and real-time state.',
   },
   {
     id: 'backend',
     col: 'col-span-12 md:col-span-7',
-    accent: 'rust',
     label: 'Backend',
-    title: 'APIs that scale',
-    tags: ['Python', 'FastAPI', 'Node.js', 'Express', 'PostgreSQL', 'WebSockets'],
-    icon: '◈',
+    title: 'Application logic & data',
+    tags: ['Python', 'FastAPI', 'Flask', 'Node.js', 'PostgreSQL', 'SQLite'],
+    project: { label: 'TechWheels / Flask & SQLite', href: 'https://github.com/RaihahMahmud/TechWheels_DB_SQL_project_CUNY' },
     desc: 'REST and WebSocket APIs, auth systems, database design, and ML serving.',
   },
   {
     id: 'ml',
     col: 'col-span-12 md:col-span-7',
-    accent: 'acid',
     label: 'Machine Learning',
-    title: 'Fine-tuning on the edge of language',
+    title: 'Language models & evaluation',
     tags: ['PyTorch', 'HuggingFace', 'Unsloth', 'LoRA', 'QLoRA', 'RLHF'],
-    icon: '◎',
+    project: { label: 'EasyBEN / Gemma model', href: 'https://huggingface.co/RaihanGG2026/gemma2-9b-easyBEN-merged' },
     desc: 'Training and evaluating LLMs. ROUGE, BLEU, BERTScore, LLM-as-a-Judge. Specializing in Bengali NLP with Llama 3.1 and Gemma-2.',
   },
   {
     id: 'tools',
     col: 'col-span-12 md:col-span-5',
-    accent: 'paper',
     label: 'Tools & Infra',
     title: 'Dev toolkit',
     tags: ['Git', 'Docker', 'Kaggle', 'Colab', 'Vercel', 'Cloudflare'],
-    icon: '◇',
+
     desc: 'Deployment, tunneling, experimentation, version control.',
   },
   {
     id: 'langs',
     col: 'col-span-12',
-    accent: 'dim',
     label: 'Languages',
     title: null,
     tags: ['Python', 'JavaScript', 'TypeScript', 'SQL', 'Bash'],
-    icon: null,
     desc: null,
     isWide: true,
   },
 ];
 
-function BentoCard({ item, inView, delay }) {
-  const accentColors = {
-    acid: { text: 'text-acid', border: 'border-acid/20', bg: 'bg-acid/5' },
-    rust: { text: 'text-rust', border: 'border-rust/20', bg: 'bg-rust/5' },
-    paper: { text: 'text-paper', border: 'border-paper/20', bg: 'bg-paper/5' },
-    dim: { text: 'text-dim', border: 'border-paper/10', bg: 'bg-paper/3' },
-  };
-  const ac = accentColors[item.accent];
+function BentoCard({ item }) {
+  const reduceMotion = useReducedMotion();
 
   if (item.isWide) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay }}
-        className={`${item.col} glass rounded-sm p-5 flex items-center justify-between flex-wrap gap-4`}
+        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: reduceMotion ? 0 : 0.4 }}
+        className={`${item.col} border-t border-border py-6 flex items-center justify-between flex-wrap gap-4`}
       >
         <span className="section-label">Languages</span>
         <div className="flex flex-wrap gap-2">
@@ -84,32 +72,28 @@ function BentoCard({ item, inView, delay }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay }}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className={`${item.col} glass rounded-sm p-6 flex flex-col gap-4 group ${ac.border} border hover:border-opacity-40 transition-all duration-300`}
+      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: reduceMotion ? 0 : 0.4 }}
+
+      className={`${item.col} ${item.id === 'ml' ? 'bg-surface border-l-2 border-acid' : 'border-t border-border'} p-6 sm:p-8 flex flex-col gap-4`}
     >
       {/* Header */}
       <div className="flex items-start justify-between">
         <span className="section-label">{item.label}</span>
-        {item.icon && (
-          <span className={`font-mono text-2xl ${ac.text} opacity-40 group-hover:opacity-100 transition-opacity`}>
-            {item.icon}
-          </span>
-        )}
+
       </div>
 
       {/* Title */}
       {item.title && (
-        <h3 className="font-display font-semibold text-paper text-xl leading-snug">
+        <h3 className="font-display font-semibold text-paper text-2xl leading-snug">
           {item.title}
         </h3>
       )}
 
       {/* Desc */}
       {item.desc && (
-        <p className="font-body text-dim text-sm leading-relaxed">{item.desc}</p>
+        <p className="font-body text-dim text-base leading-relaxed">{item.desc}</p>
       )}
 
       {/* Tags */}
@@ -118,41 +102,33 @@ function BentoCard({ item, inView, delay }) {
           <span key={tag} className="tag">{tag}</span>
         ))}
       </div>
+      {item.project && <a href={item.project.href} target="_blank" rel="noopener noreferrer" className="field-link self-start">{item.project.label} <span aria-hidden="true">↗</span></a>}
     </motion.div>
   );
 }
 
 export default function Skills() {
+  const reduceMotion = useReducedMotion();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="skills" ref={ref} className="py-32 relative">
-      {/* Big bg label */}
-      <div className="absolute right-0 top-16 overflow-hidden pointer-events-none">
-        <p
-          className="font-display font-extrabold opacity-[0.03] leading-none"
-          style={{ fontSize: 'clamp(80px, 14vw, 180px)', color: '#f2ede6' }}
-        >
-          SKILLS
-        </p>
-      </div>
-
+    <section id="skills" ref={ref} className="field-section">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -16 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-16"
+          transition={{ duration: reduceMotion ? 0 : 0.4 }}
+          className="flex items-center gap-4 mb-8"
         >
           <span className="section-label">02 — Skills</span>
           <div className="flex-1 divider max-w-xs" />
         </motion.div>
 
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: reduceMotion ? 0 : 0.4 }}
           className="font-display font-bold text-paper mb-12"
           style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
         >
@@ -162,8 +138,8 @@ export default function Skills() {
 
         {/* Bento grid */}
         <div className="bento-grid">
-          {bentoItems.map((item, i) => (
-            <BentoCard key={item.id} item={item} inView={inView} delay={0.15 + i * 0.07} />
+          {bentoItems.map((item) => (
+            <BentoCard key={item.id} item={item} />
           ))}
         </div>
       </div>
